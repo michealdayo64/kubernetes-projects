@@ -1,0 +1,40 @@
+========================================
+Kubernetes Incident Triage Report
+========================================
+Full Name: Micheal Omotosho
+Timestamp: 2026-11-03T10:29:35Z
+Namespace: book-review
+App Label: app=backend
+Service: backend-service
+
+[PASS] Cluster access, namespace, and matching pod selection verified (1 pod(s))
+
+Pod status (kubectl get pods -o wide):
+  NAME                       READY   STATUS    RESTARTS   AGE     IP               NODE                            NOMINATED NODE   READINESS GATES
+  backend-686557cf96-wj2vq   1/1     Running   0          2m45s   192.168.12.190   ip-192-168-28-24.ec2.internal   <none>           <none>
+[PASS] No pods reporting CrashLoopBackOff, ImagePullBackOff, ErrImagePull, Pending, ContainerCreating, Error, or Unknown
+[PASS] All matching pods report READY containers equal to desired containers
+[PASS] No pod has 5 or more restarts
+
+Recent namespace events (last 5, sorted by time):
+  2m51s   Normal    ScalingReplicaSet   deployment/backend              Scaled down replica set backend-6d968b7c66 from 1 to 0
+  2m51s   Normal    ScalingReplicaSet   deployment/backend              Scaled up replica set backend-686557cf96 from 0 to 1
+  2m50s   Normal    Started             pod/backend-686557cf96-wj2vq    Started container backend
+  2m50s   Normal    Created             pod/backend-686557cf96-wj2vq    Created container: backend
+  2m50s   Normal    Pulled              pod/backend-686557cf96-wj2vq    Container image "michealdayo64/book-review-backend:v1" already present on machine
+[WARN] Warning events are present (including historical events); confirm age and workload before attributing a cause.
+Service EndpointSlice evidence:
+Slice: backend-service-5m7hq Ports: 3001 
+backend-686557cf96-wj2vq ready=true addresses=["192.168.12.190"]
+[PASS] Service 'backend-service' has ready backend(s): 192.168.12.190
+
+Previous-container logs for the first non-running pod (last 10 lines):
+  All matching pods are Running — no previous-container logs to capture.
+
+Summary:
+PASS: 5
+WARN: 1
+FAIL: 0
+Overall Status: WARN
+Script Exit Code: 1
+Report File: /home/user/k8s-labs/week-12-agentic-k8s/reports/k8s-health-report.txt
